@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -19,6 +20,9 @@ public class DbService {
         return repository.findAll();
     }
 
+    public Task getById(Long id){
+        return repository.findById(id).orElse(new Task());
+    }
 
 
 }
