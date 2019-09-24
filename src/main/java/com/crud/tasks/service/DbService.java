@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @Service
@@ -24,5 +25,16 @@ public class DbService {
         return repository.findById(id).orElse(new Task());
     }
 
+    public Task saveTask(final Task task){
+        return  repository.save(task);
+    }
+
+    public Optional<Task> getTask(final  Long id){
+        return repository.findById(id);
+    }
+
+    public void delete(Long id){
+        repository.deleteById(id);
+    }
 
 }
