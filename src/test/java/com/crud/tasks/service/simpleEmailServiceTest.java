@@ -9,16 +9,15 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 
 @RunWith(MockitoJUnitRunner.class)
-public class SimpleMailServiceTest {
+public class simpleEmailServiceTest {
     @InjectMocks
-    private SimpleMailService simpleMailService;
+    private SimpleEmailService simpleEmailService;
     @Mock
     private JavaMailSender javaMailSender;
 
@@ -34,7 +33,7 @@ public class SimpleMailServiceTest {
         mailMessage.setCc(mail.getToCc());
 
         //When
-        simpleMailService.send(mail);
+        simpleEmailService.send(mail);
 
         //Then
         verify(javaMailSender, times(1)).send((SimpleMailMessage) any());

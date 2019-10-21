@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
 
 @Service
-public class SimpleMailService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleMailService.class);
+public class SimpleEmailService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SimpleEmailService.class);
     @Autowired
     private JavaMailSender javaMailSender;
 
