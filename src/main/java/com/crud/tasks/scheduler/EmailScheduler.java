@@ -26,13 +26,12 @@ public class EmailScheduler {
     public void sendInformationEmail() {
         long size = taskRepository.count();
 
-        if (size == 1) {
-            tasks = tasks.substring(tasks.length() - 1);
-        }
+       String end = (size == 1 ? tasks = tasks.substring(tasks.length() - 1) : tasks);
+
         simpleEmailService.send(new Mail(
                 adminConfig.getAdminMail(),
                 SUBJETC,
-                "Currently in database you got: " + size + tasks )
+                "Currently in database you got: " + size + end)
         );
     }
 }
