@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class TrelloMapperTestSuite {
+public class MapperTestSuite {
     @Autowired
     public TrelloMapper trelloMapper;
     @Autowired
