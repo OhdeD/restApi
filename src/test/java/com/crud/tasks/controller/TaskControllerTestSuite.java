@@ -19,6 +19,7 @@ import java.util.List;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -109,5 +110,6 @@ public class TaskControllerTestSuite {
                 .characterEncoding("UTF-8")
                 .content(param))
                 .andExpect(status().is(200));
+        verify(taskController).createTask(any(TaskDto.class));
     }
 }
