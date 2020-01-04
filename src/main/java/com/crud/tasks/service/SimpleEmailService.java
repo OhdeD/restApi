@@ -25,8 +25,10 @@ public class SimpleEmailService {
         try {
             if (mail.getMessage().substring(0, 8).equals("New card")) {
                 javaMailSender.send(createMimeMessageForTrello(mail));
-            } else {
+            } else if (mail.getMessage().substring(0, 8).equals("Currently")){
                 javaMailSender.send(createMimeMessageForScheduler(mail));
+            }else {
+                javaMailSender.send(createMailMessage(mail));
             }
             LOGGER.info("Email has been sent.");
 
@@ -35,7 +37,7 @@ public class SimpleEmailService {
         }
     }
 
-    private MimeMessagePreparator createMimeMessageForScheduler(final Mail mail) {
+    MimeMessagePreparator createMimeMessageForScheduler(final Mail mail) {
         return mimeMessage -> {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
             mimeMessageHelper.setTo(mail.getMailTo());
@@ -57,7 +59,7 @@ public class SimpleEmailService {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getMailTo());
         mailMessage.setSubject(mail.getSubject());
-        mailMessage.setText(mailCreatorService.buildTrelloCardEmail(mail.getMessage()));
+        mailMessage.setText(mail.getMessage());
         return mailMessage;
     }
 }

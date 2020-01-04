@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -46,7 +45,7 @@ public class TaskControllerTestSuite {
         when(taskController.getTasks()).thenReturn(tasks);
 
         //When & Then
-        mockMvc.perform(get("/v1/task/getTasks").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/tasks").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(0)));
     }
@@ -59,13 +58,13 @@ public class TaskControllerTestSuite {
         TaskDto taskDto = new TaskDto(112L, "title", "content");
         when(taskController.getTask(112L)).thenReturn(taskDto);
         //When & Then
-        mockMvc.perform(get("/v1/task/getTask").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(get("/v1/tasks/" + task.getId()).contentType(MediaType.APPLICATION_JSON)
                 .param("taskId", "112"))
                 .andDo(print())
                 .andExpect(status().is(200))
-                .andExpect(jsonPath("$.id").value("112"))
-                .andExpect(jsonPath("$.title").value("title"))
-                .andExpect(jsonPath("$.content").value("content"));
+                .andExpect(jsonPath("id").value("112"))
+                .andExpect(jsonPath("title").value("title"))
+                .andExpect(jsonPath("content").value("content"));
     }
 
     @Test
@@ -74,10 +73,9 @@ public class TaskControllerTestSuite {
         Task task = new Task(888L, "title", "content");
         dbService.saveTask(task);
         //When & Then
-        mockMvc.perform(delete("/v1/task/deleteTask").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(delete("/v1/tasks/" + task.getId()).contentType(MediaType.APPLICATION_JSON)
                 .param("taskId", "888"))
                 .andExpect(status().is(200));
-
     }
 
     @Test
@@ -90,7 +88,7 @@ public class TaskControllerTestSuite {
         String param = gson.toJson(taskDto);
         when(taskController.updateTask(any())).thenReturn(taskDto);
         //When & Then
-        mockMvc.perform(put("/v1/task/updateTask").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put("/v1/tasks").contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(param))
                 .andExpect(status().is(200))
@@ -100,13 +98,13 @@ public class TaskControllerTestSuite {
     }
 
     @Test
-    public void createTask() throws  Exception{
+    public void createTask() throws Exception {
         //Given
         TaskDto taskDto = new TaskDto(333L, "title", "content");
         Gson gson = new Gson();
         String param = gson.toJson(taskDto);
         //When & Then
-        mockMvc.perform(post("/v1/task/createTask").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post("/v1/tasks").contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(param))
                 .andExpect(status().is(200));
